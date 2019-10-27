@@ -15,6 +15,10 @@ const schema = gql`
         users: [User]
     }
 
+    type Mutation {
+        addUser(username: String!): [User]
+    }
+
     type User {
         username: String!
     }
@@ -24,6 +28,15 @@ const resolvers = {
     Query: {
         users: () => usersList
     },
+    Mutation: {
+        addUser: (parent, args) => {
+            usersList.push({
+                username: args.username
+            })
+
+            return usersList
+        }
+    }
 };
 
 const apolloServer = new ApolloServer({
