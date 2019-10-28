@@ -2,9 +2,10 @@
   "name": "ApolloServer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "start": "ts-node index.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +17,9 @@
     "express": "^4.17.1",
     "graphql": "^14.5.8",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   }
 }
