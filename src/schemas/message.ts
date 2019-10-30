@@ -9,7 +9,7 @@ export class Message {
     @Field(type => ID!)
     id: string
 
-    @Field()
+    @Field({nullable: false})
     message: string
 
     @Field(type => User!)

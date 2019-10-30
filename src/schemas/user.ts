@@ -13,5 +13,5 @@ export class User {
     username: string;
     
     @Field(type => [Message])
-    messages: string[];
+    messages: Message[];
 }
