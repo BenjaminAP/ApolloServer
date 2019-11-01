@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import { ObjectType, Field, ID } from "type-graphql";
-import { type } from "os";
 import { Message } from "./message";
 
 @ObjectType()
