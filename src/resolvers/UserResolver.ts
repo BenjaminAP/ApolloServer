@@ -3,7 +3,9 @@ import { User } from "../schemas/user";
 import { UserService } from "../services/userService";
 
 import uuid from 'uuid'
+import { Service } from "typedi";
 
+@Service()
 @Resolver(of => User)
 export class UserResolver {
 
@@ -26,7 +28,12 @@ export class UserResolver {
         user.id = uuid();
         user.username = name;
 
-        return this.userService.add(user);
+        try {
+            return this.userService.add(user);
+        } catch (err) {
+            console.log(err);
+        }
+        
             // .then(user => {
             //     return user;
             // })

@@ -1,16 +1,17 @@
 import { User } from "../schemas/user";
+import { Service } from "typedi";
 
-let users: User[];
-
+@Service()
 export class UserService {
+    private users: Array<User> = [];
 
     public add(user: User): User {
-        users.push(user);
+        this.users.push(user);
         return user;
     }
 
     public getUser(username: string): User {
-        return users.find(user => {
+        return this.users.find(user => {
             return user.username === username;
         })
     }
