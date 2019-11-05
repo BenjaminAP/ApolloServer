@@ -1,41 +1,36 @@
 import { User } from "../schemas/user";
 import { Service } from "typedi";
+import { resolve } from "url";
+import { inherits } from "util";
 
 @Service()
 export class UserService {
     private users: Array<User> = [];
 
-    public add(user: User): User {
-        this.users.push(user);
-        return user;
-    }
-
-    public getUser(username: string): User {
-        return this.users.find(user => {
-            return user.username === username;
+    public add(nUser: User): Promise<User> {
+        return new Promise((resolve, reject) => {
+            try {
+                this.users.push(nUser);
+                resolve(nUser);
+            } catch (err) {
+                reject(err);
+            }
+            
         })
     }
 
-    // add(user: User): Promise<User> {
-    //      return new Promise((resolve, reject) => {
-    //          users.push(user);
-    //          resolve(user);
-    //      })
-    //  }
-
-//    findByID(id: string): Promise<User> {
-//         return new Promise((resolve, reject) => {
-//             users.find( user => {
-//                 if(user.id == id) {
-//                     resolve(user);
-//                 }
-//             })
-//         });
-//     }
-
-    // users(): Promise<User[]> {
-    //     return new Promise((resolve, reject) => {
-    //         resolve(users);
-    //     })
-    // }
+    public getUser(username: string): Promise<User> {
+        return new Promise((resolve, reject) => {
+            try {
+                this.users.find(user => {
+                    if (user.username === username) {
+                        resolve(user);
+                    }
+                })
+            } catch (err) {
+                reject(err);
+            }
+        }) 
+        
+    }
 }
