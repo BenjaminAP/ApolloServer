@@ -12,6 +12,6 @@ export class Message {
     @Field({nullable: false})
     message: string
 
-    @Field(type => User!)
-    user: User
+    @Field(type => ID!)
+    userID: string
 }

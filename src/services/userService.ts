@@ -1,7 +1,5 @@
 import { User } from "../schemas/user";
 import { Service } from "typedi";
-import { resolve } from "url";
-import { inherits } from "util";
 
 @Service()
 export class UserService {
