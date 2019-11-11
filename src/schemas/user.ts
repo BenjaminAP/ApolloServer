@@ -6,11 +6,14 @@ import { Message } from "./message";
 export class User {
 
     @Field(type => ID!)
-    id: string;
+    public id!: string;
 
     @Field()
-    username: string;
+    public username!: string;
     
     @Field(type => [Message])
-    messages: Message[];
+    public messages: Message[] | null;
+
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 }
