@@ -1,15 +1,17 @@
 import { User } from "../schemas/user";
 import { Service } from "typedi";
+import { getRepository } from "typeorm";
+import { resolve } from "path";
 
 @Service()
 export class UserService {
-    private users: Array<User> = [];
 
     public add(nUser: User): Promise<User> {
+
         return new Promise((resolve, reject) => {
             try {
-                this.users.push(nUser);
-                resolve(nUser);
+                const userRepo = getRepository(User);
+                resolve(userRepo.save(nUser));
             } catch (err) {
                 reject(err);
             }
@@ -17,18 +19,30 @@ export class UserService {
         })
     }
 
-    public getUser(username: string): Promise<User> {
+    public getUsers(): Promise<User[]> {
+        
         return new Promise((resolve, reject) => {
             try {
-                this.users.find(user => {
-                    if (user.username === username) {
-                        resolve(user);
-                    }
-                })
+                const userRepo = getRepository(User);
+                const usersList = userRepo.find();
+                resolve(usersList);
             } catch (err) {
                 reject(err);
             }
         }) 
         
+    }
+
+    public getByUsername(username: string): Promise<User[]> {
+
+        return new Promise((resolve, reject) => {
+            try {
+                const userRepo = getRepository(User);
+                const user = userRepo.find({username})
+                resolve(user);
+            } catch (err) {
+                reject(err)
+            }
+        })
     }
 }
