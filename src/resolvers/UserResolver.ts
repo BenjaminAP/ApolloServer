@@ -16,26 +16,37 @@ export class UserResolver {
         return user.id;
     }
 
-    @Query(returns => User)
-    public async getUser(@Arg("username") username: string): Promise<User> {
-        return await this.userService.getUser(username)
-            .then(user => {
-                return user
+    @Query(returns => [User])
+    public async getUsers(): Promise<User> {
+        return await this.userService.getUsers()
+            .then(usersList => {
+                return usersList;
             })
             .catch(err => {
                 return err
             });
     }
 
+    // @Query(returns => User)
+    // public async getUser(@Arg("username") username: string): Promise<User> {
+    //     return await this.userService.getUsers(username)
+    //         .then(user => {
+    //             return user
+    //         })
+    //         .catch(err => {
+    //             return err
+    //         });
+    // }
+
     @Mutation(returns => User)
-    public async addUser(@Arg("name") name: string): Promise<User> {
+    public async addUser(@Arg("username") name: string): Promise<User> {
 
         let user = new User;
-        user.id = uuid();
         user.username = name;
 
         return await this.userService.add(user)
             .then(user => {
+                console.log(user);
                 return user
             })
             .catch(err => {
