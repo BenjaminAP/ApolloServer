@@ -23,11 +23,8 @@ export class MessageRersolver {
 
         return await this.messageService.post(newMsg)
             .then(savedMsg => {
-
-                console.log(`Message Resolver Success: ${savedMsg.toString()}`);
                 return savedMsg; 
             }).catch(err => {
-                console.log(`Message Resolver: ${err}`)
                 return err
             })
     }
