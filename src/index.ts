@@ -1,20 +1,20 @@
+import { Message } from './schemas/message';
 import cors from 'cors';
 import express from 'express';
 import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from './resolvers/UserResolver';
-import { UserService } from './services/userService';
 import { Container } from "typedi";
 import {createConnection} from "typeorm";
 import { User } from './schemas/user';
+import { MessageRersolver } from './resolvers/MessageResolver';
 
 const app = express();
 app.use(cors())
 
 async function bootstrap() {
     let schema;
-    const userService = new UserService();
 
     //a ormconfig.json file can be used instead.... THINK ABOU IT.
     const connection = await createConnection({
@@ -24,7 +24,8 @@ async function bootstrap() {
         username: "dev",
         password: "msdev",
         database: "dev",
-        entities: [User]
+        entities: [User, Message],
+        synchronize: true
     });
 
     await connection.synchronize();
@@ -33,7 +34,7 @@ async function bootstrap() {
 
     try {
         schema = await buildSchema({
-            resolvers: [UserResolver],
+            resolvers: [UserResolver, MessageRersolver],
             container: Container
         })
     } catch (err) {

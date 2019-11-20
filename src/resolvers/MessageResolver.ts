@@ -5,7 +5,7 @@ import { MessageService } from "../services/messageService";
 
 @Service()
 @Resolver(of => Message)
-class MessageRersolver {
+export class MessageRersolver {
 
     constructor(private messageService: MessageService){}
 
@@ -14,4 +14,4 @@ class MessageRersolver {
 
     //     return this.messageService.get
     // }
-}
+} 
