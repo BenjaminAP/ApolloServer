@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { ObjectType, Field, ID } from "type-graphql";
 import { Message } from "./message";
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from "typeorm";
 
 @Entity()
 @ObjectType()
@@ -15,7 +15,7 @@ export class User {
     @Field()
     public username!: string;
     
-    @OneToMany(type => Message, messages => messages.user)
+    @OneToMany(type => Message, messages => messages.user, { eager: true})
     @Field(type => [Message])
-    messages: Message[];
+    messages: Promise<Message[]>;
 }

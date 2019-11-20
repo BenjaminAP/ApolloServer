@@ -2,22 +2,32 @@ import "reflect-metadata";
 import { ObjectType, Field, ID } from "type-graphql";
 
 import { User } from './user'
-import { FilterRootFields } from "graphql-tools";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { MessageService } from "../services/messageService";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
 
 @Entity()
 @ObjectType()
 export class Message {
+
     @PrimaryGeneratedColumn('uuid')
     @Field(type => ID!)
-    id: string;
+    public id: string;
 
     @Column()
     @Field({nullable: false})
-    message: string;
+    public message: string;
 
     @ManyToOne(type => User, user => user.messages)
     @Field(type => User)
-    user!: User;
+    public user!: User;
+
+    public toString(): string {
+        return( 
+        `Message:
+            id: ${this.id}
+            message: ${this.message}
+            user: 
+                id: ${this.user.id}
+                username: ${this.user.username}`
+        )
+    }
 }

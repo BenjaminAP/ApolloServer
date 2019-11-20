@@ -7,10 +7,10 @@ export class UserService {
     private userRepo;
 
     constructor(){
-        this.userRepo = getRepository(User)
+        this.userRepo = getRepository(User);
     }
 
-    public add(nUser: User): Promise<User> {
+    public post(nUser: User): Promise<User> {
 
         return new Promise((resolve, reject) => {
             try {
@@ -30,8 +30,7 @@ export class UserService {
             } catch (err) {
                 reject(err);
             }
-        }) 
-        
+        })
     }
 
     public getByUsername(username: string): Promise<User[]> {
@@ -41,6 +40,18 @@ export class UserService {
                 resolve(this.userRepo.find({username}));
             } catch (err) {
                 reject(err)
+            }
+        })
+    }
+
+    public getById(userId: string): Promise<User> {
+        
+        return new Promise((resolve, reject) => {
+
+            try {
+                resolve(this.userRepo.find({userId}));
+            } catch(err) {
+                reject(err);
             }
         })
     }

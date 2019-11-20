@@ -43,10 +43,9 @@ export class UserResolver {
     @Mutation(returns => User)
     public async addUser(@Arg("username") name: string): Promise<User> {
 
-        let user = new User;
-        user.username = name;
+        let user = new User();
 
-        return await this.userService.add(user)
+        return await this.userService.post(user)
             .then(user => {
                 console.log(user);
                 return user
