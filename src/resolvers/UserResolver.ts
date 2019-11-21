@@ -20,7 +20,6 @@ export class UserResolver {
     public async getUsers(): Promise<User> {
         return await this.userService.getUsers()
             .then(usersList => {
-                console.log(usersList);
                 return usersList;
             })
             .catch(err => {
@@ -32,7 +31,6 @@ export class UserResolver {
     public async getByUsername(@Arg("username") username: string): Promise<User> {
         return await this.userService.getByUsername(username)
             .then(user => {
-                console.log(user);
                 return user
             })
             .catch(err => {
@@ -43,11 +41,11 @@ export class UserResolver {
     @Mutation(returns => User)
     public async addUser(@Arg("username") name: string): Promise<User> {
 
-        let user = new User();
+        const user = new User();
+        user.username = name;
 
         return await this.userService.post(user)
             .then(user => {
-                console.log(user);
                 return user
             })
             .catch(err => {
